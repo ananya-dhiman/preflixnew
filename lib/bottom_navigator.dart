@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'home.dart';
+import 'search.dart';
+import 'download.dart';
 
 class BottomNavigatorClass extends StatefulWidget {
   const BottomNavigatorClass({super.key});
@@ -12,6 +14,8 @@ class _BottomNavigatorClassState extends State<BottomNavigatorClass> {  Widget b
     int _selectedIndex=0;
     final List<Widget> _pages=[
       const Page2(),
+      const Page3(),
+      const Page4(),
     ];
     void _onItemTapped(int index){
       setState(() {

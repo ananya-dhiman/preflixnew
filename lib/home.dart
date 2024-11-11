@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'obj.dart';
 import 'api.dart';
 import 'bottom_navigator.dart';
+import 'detail.dart';
 void main() {
   runApp(const Page2());
 }
@@ -34,28 +35,42 @@ class _HomePageState extends State<HomePage>{
       futureObj=Api.fetchObjs();
     
   }
+  void _openDetails(int id){
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder:(context)=>Page3(showId:id))
+    );
+  }
+
 
 @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
+        
         backgroundColor: Colors.black,
         elevation: 0,
-        leading: IconButton(
+        leading:
+         IconButton(
           icon: const Icon(Icons.movie, color: Colors.yellow),
           onPressed: () {},
         ),
+        
         actions: [
+          
           IconButton(
             icon: const Icon(Icons.search, color: Colors.white),
             onPressed: () {},
           ),
-          Image.asset(
-            'assets/panda.png',
-            height: 40,
-            width: 40,
-          ),
+        Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0), // Adjust padding as needed
+        child: Image.asset(
+          'assets/panda.png',
+          height: 30,
+          width: 30,
+        ),
+      ),
         ],
       ),
       body:FutureBuilder<List<Objs>>(
@@ -148,7 +163,10 @@ class _HomePageState extends State<HomePage>{
                   itemCount: data.length,
                   itemBuilder: (context, index) {
                     final obj=data[index];
-                    return Padding(
+                    return GestureDetector(
+                      onTap: ()=>_openDetails(obj.id),
+
+                  child: Padding(
                       padding: const EdgeInsets.only(right: 10),
                       child:Card(
                        color: Colors.grey[900],
@@ -172,30 +190,28 @@ class _HomePageState extends State<HomePage>{
                                 ],
                               ),
                       )
+                  )
+                    );
+                  }
+                      )
+              )
+            ]
+        
+        )
+
                       
+                    )
                     );
                     
-                  },
-                ),
-              ),
-
-              const SizedBox(height: 20),
-
-              
-             
-            ],
-          ),
-        ),
-      );
-        }
-         else{
-          return const Center(child: Text('No data found', style: TextStyle(color: Colors.white)));
+                    
+                  }
+                   else{
+                    return const Center(child: Text('No data found', style: TextStyle(color: Colors.white)));
           
         }
         }
-       
-      ),
-        bottomNavigationBar: BottomNavigationBar(
+                ),
+     bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.black,
         selectedItemColor: Colors.yellow,
         unselectedItemColor: Colors.white,
@@ -216,10 +232,20 @@ class _HomePageState extends State<HomePage>{
         onTap: (index) {
           // Handle tap but not for navigation anymore
         },
-      ),
-    );
-  }
-}
+      
+    )    
+              );
+
+          
+
+              
+             
+          
+        }
+        
+        }
+       
+ 
     
     
   

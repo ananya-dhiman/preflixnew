@@ -2,20 +2,29 @@ import 'package:flutter/material.dart';
 import 'obj.dart';
 import 'api.dart';
 
-class MovieDetailsPage extends StatefulWidget {
+class Page3 extends StatefulWidget {
+  final int showId;
+
+  const Page3({Key? key, required this.showId}) : super(key: key);
   @override
   _MovieDetailsPageState createState() => _MovieDetailsPageState();
 }
 
-class _MovieDetailsPageState extends State<MovieDetailsPage> {
-  // Dummy data placeholders
-  String title = "DHOKA";
-  String genre = "Charming Feel-Good Dramedy Movie";
-  String year = "2024";
-  String summary =
-      "Charming Feel-Good Dramedy Movie\nCharming Feel-Good Dramedy Movie\nCharming Feel-Good Dramedy Movie";
-  String imageUrl =
-      "https://via.placeholder.com/300x200"; // Placeholder image URL
+class _MovieDetailsPageState extends State<Page3> {
+
+  late Future<List<Objs>> futureObj;
+  @override
+  void initState() {
+    //called to initialize futureObj for first time
+    super.initState();
+      futureObj=Api.fetchObjs();
+    
+  }
+  String cleanSummary(String summary) {
+  // Use a regular expression to remove HTML tags
+  final cleanedSummary = summary.replaceAll(RegExp(r'<[^>]*>'), '');
+  return cleanedSummary;
+}
 
   @override
   Widget build(BuildContext context) {
@@ -29,31 +38,62 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
             icon: Icon(Icons.search, color: Colors.white),
             onPressed: () {},
           ),
-          IconButton(
-            icon: Icon(Icons.download, color: Colors.white),
-            onPressed: () {},
-          ),
+          Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0), // Adjust padding as needed
+        child: Image.asset(
+          'assets/panda.png',
+          height: 30,
+          width: 30,
+        ),
+      ),
         ],
       ),
-      body: Padding(
+      body:FutureBuilder<List<Objs>>(
+        future:futureObj,
+        builder:(context,snapshot){
+          if(snapshot.connectionState==ConnectionState.waiting){
+            return Center(child:CircularProgressIndicator());
+
+
+          }
+          else if(snapshot.hasError){
+            return Center(child:Text('Error ${snapshot.error}',style:TextStyle(color:Colors.white)));
+
+          }
+          else if(snapshot.hasData){
+            final shows=snapshot.data!;
+            final show=shows.firstWhere((item)=>item.id==widget.showId,
+            orElse:() => Objs(id: 0, name: 'Not Found', summary: 'No details available', premiered: DateTime(2000, 1, 1), image: '', genres: []),
+            );
+            if(show.id==0){
+              return const Center(child: Text("Sorry,Show not found",style:TextStyle(color:Colors.white)),
+              );
+            }
+      else{
+          
+      return SingleChildScrollView(
+
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Movie Image
+            // Image
             Container(
               decoration: BoxDecoration(
-                border: Border.all(color: Colors.blue, width: 2),
+                border: Border.all(color: Colors.yellow, width: 2),
+
               ),
               child: Image.network(
-                imageUrl,
-                fit: BoxFit.cover,
+                show.image,
+                width:350,
+                height: 500,
+                fit: BoxFit.fill,
               ),
             ),
             SizedBox(height: 10),
             // Movie Title
             Text(
-              title,
+              show.name,
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -63,7 +103,7 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
             SizedBox(height: 8),
             // Genre and Year
             Text(
-              "$genre\n$year",
+              "${show.genres.join(', ')}\n${show.premiered.year}",
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 16,
@@ -74,16 +114,19 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
             // Play Button
             ElevatedButton.icon(
               style: ElevatedButton.styleFrom(
+                backgroundColor:Colors.black,
+                side: const BorderSide(color: Colors.white),
+              
               
               ),
               onPressed: () {},
-              icon: Icon(Icons.play_arrow),
-              label: Text("Play"),
+              icon: Icon(Icons.play_arrow,color: Colors.yellow,),
+              label: Text("Play",style:TextStyle(color:Colors.yellow)),
             ),
             SizedBox(height: 10),
-            // Summary
+          
             Text(
-              summary,
+              cleanSummary(show.summary),
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 14,
@@ -94,15 +137,24 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
             // Back Button
             ElevatedButton(
               style: ElevatedButton.styleFrom(
+                backgroundColor:Colors.black,
+                 side: const BorderSide(color: Colors.white),
               
               ),
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text("Back"),
+              child: Text("Back",style:TextStyle(color:Colors.yellow)),
             ),
           ],
         ),
+      );
+      }
+          }
+          else{
+            return Center(child: Text("Error 404",style:TextStyle(color:Colors.white)));
+          }
+        }
       ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.black,
@@ -128,5 +180,6 @@ class _MovieDetailsPageState extends State<MovieDetailsPage> {
 }
 
 void main() => runApp(MaterialApp(
-  home: MovieDetailsPage(),
+   debugShowCheckedModeBanner: false,
+  home: Page3(showId:1),
 ));

@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'home.dart';
 
-class Page3 extends StatelessWidget {
-  const Page3({super.key});
+class Page4 extends StatelessWidget {
+  const Page4({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Search(),
+      home: Downloads(),
     );
   }
 }
 
-class Search extends StatelessWidget {
+class Downloads extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +28,6 @@ class Search extends StatelessWidget {
               color: Colors.yellow,
               size: 100,
             ),
-            
             const SizedBox(height: 20),
             
           
