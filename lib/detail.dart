@@ -21,8 +21,8 @@ class _MovieDetailsPageState extends State<Page3> {
     
   }
   String cleanSummary(String summary) {
-  // Use a regular expression to remove HTML tags
-  final cleanedSummary = summary.replaceAll(RegExp(r'<[^>]*>'), '');
+ 
+  final cleanedSummary = summary.replaceAll(RegExp(r'<[b/p^>]*>'), '');
   return cleanedSummary;
 }
 

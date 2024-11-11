@@ -22,7 +22,7 @@ class SplashScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Movie reel icon
+          
            const Icon(
               Icons.movie,
               color: Colors.yellow,
@@ -55,7 +55,7 @@ class SplashScreen extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const Page2(), // Make sure Page6 is defined and imported
+                            builder: (context) => const Page2(),
                             ),
                         );
                },
@@ -63,7 +63,7 @@ class SplashScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             
-            // Subtitle text
+    
             const Text(
               'Watch your favourite movies and shows now!',
               style: TextStyle(

@@ -14,7 +14,7 @@ class _BottomNavigatorClassState extends State<BottomNavigatorClass> {  Widget b
     int _selectedIndex=0;
     final List<Widget> _pages=[
       const Page2(),
-      const Page3(),
+      Page3(),
       const Page4(),
     ];
     void _onItemTapped(int index){
@@ -46,16 +46,16 @@ class _BottomNavigatorClassState extends State<BottomNavigatorClass> {  Widget b
               context,
               MaterialPageRoute(builder: (context) => HomePage()),
             );
-          // } else if (index == 1) {
-          //   Navigator.push(
-          //     context,
-          //     MaterialPageRoute(builder: (context) => SearchPage()),
-          //   );
-          // } else if (index == 2) {
-          //   Navigator.push(
-          //     context,
-          //     MaterialPageRoute(builder: (context) => DownloadsPage()),
-          //   );
+          } else if (index == 1) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Page3()),
+            );
+          } else if (index == 2) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Page4()),
+            );
            }
         },
 

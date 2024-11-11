@@ -134,7 +134,11 @@ class _HomePageState extends State<HomePage>{
                             backgroundColor: Colors.black,
                             side: const BorderSide(color: Colors.white),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(context,
+                            MaterialPageRoute(builder:(context)=>Page3(showId:34653))
+                            );
+                          },
                           child: const Row(
                             children: [
                               Icon(Icons.info, color: Colors.white),

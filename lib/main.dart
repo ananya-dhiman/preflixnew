@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'splash.dart';
 import 'home.dart';
 import 'search.dart';
+import 'download.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -19,7 +20,8 @@ class MyApp extends StatelessWidget {
       routes: {
       '/splash':(context)=> const Page1(),
       '/home':(context)=> const Page2(),
-      '/search':(context)=> const Page3(),
+      '/search':(context)=>  Page3(),
+      '/downloads':(context)=>  Page4(),
 
 
       }
